@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# Misc
+.DS_Store
+*.pem
+.env*
+!.env.example
+
+# Leftovers
+toma-nuestra-mano/
+video/
