@@ -10,7 +10,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Image src="/logo_png.png" alt="Logo" width={48} height={48} className="rounded-full" />
+              <Image src="/logo.png" alt="Logo" width={130} height={72} className="object-contain" />
               <div>
                 <p className="text-white font-bold text-sm">Toma Nuestra Mano</p>
                 <p className="text-[#FFC107] text-xs">Hagámoslo Hoy</p>

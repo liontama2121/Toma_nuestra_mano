@@ -36,11 +36,11 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           <a href="#inicio" className="flex items-center gap-3">
             <Image
-              src="/logo_png.png"
+              src="/logo.png"
               alt="Fundación Toma Nuestra Mano"
-              width={44}
-              height={44}
-              className="rounded-full"
+              width={120}
+              height={67}
+              className="object-contain"
             />
             <div className="hidden sm:block">
               <p className="text-white font-bold text-sm leading-tight">Toma Nuestra Mano</p>
