@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { FaInstagram, FaFacebook, FaTiktok, FaXTwitter } from 'react-icons/fa6';
 
 export function Footer() {
   return (
@@ -9,7 +12,7 @@ export function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <Image src="/logo_png.png" alt="Logo" width={48} height={48} className="rounded-full" />
               <div>
-                <p className="text-white font-bold font-orbitron text-sm">Toma Nuestra Mano</p>
+                <p className="text-white font-bold text-sm">Toma Nuestra Mano</p>
                 <p className="text-[#FFC107] text-xs">Hagámoslo Hoy</p>
               </div>
             </div>
@@ -19,7 +22,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold mb-4 font-orbitron text-sm">Información Legal</h4>
+            <h4 className="text-white font-bold mb-4  text-sm">Información Legal</h4>
             <ul className="space-y-2 text-[#E8F0FE]/60 text-xs leading-relaxed">
               <li>FUNDACION TOMA NUESTRA MANO PARA TU DESARROLLO SOCIAL INTEGRAL</li>
               <li>Constituida: Acta No. 1 — 2 de junio de 2010</li>
@@ -30,19 +33,28 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-white font-bold mb-4 font-orbitron text-sm">Síguenos</h4>
-            <a
-              href="https://www.facebook.com/fundacion.tomanuestramano/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-[#E8F0FE]/60 hover:text-[#FFC107] transition-colors text-sm"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-              </svg>
-              fundacion.tomanuestramano
-            </a>
-            <div className="mt-6">
+            <h4 className="text-white font-bold mb-4 text-sm">Síguenos</h4>
+            <div className="flex items-center gap-3">
+              {[
+                { icon: FaInstagram, href: '#', label: 'Instagram' },
+                { icon: FaFacebook, href: 'https://www.facebook.com/fundacion.tomanuestramano', label: 'Facebook' },
+                { icon: FaTiktok, href: '#', label: 'TikTok' },
+                { icon: FaXTwitter, href: '#', label: 'X (Twitter)' },
+              ].map(({ icon: Icon, href, label }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href !== '#' ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="group w-10 h-10 rounded-full border border-[#FFC107]/50 flex items-center justify-center text-[#FFC107] hover:border-[#FFC107] hover:scale-110 hover:shadow-[0_0_12px_rgba(255,193,7,0.4)] transition-all duration-200"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
+
+            <div className="mt-5">
               <p className="text-[#E8F0FE]/40 text-xs">Objeto social: beneficencia, bienestar común, mejoramiento de calidad de vida, interés social científico, tecnológico, cultural, recreativo y servicio social — a nivel nacional e internacional.</p>
             </div>
           </div>

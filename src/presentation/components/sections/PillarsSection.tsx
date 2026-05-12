@@ -41,8 +41,8 @@ export function PillarsSection() {
     <section id="pilares" className="relative py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <p className="text-[#FFC107] text-sm font-bold tracking-widest uppercase mb-3 font-orbitron">Nuestros Pilares</p>
-          <h2 className="font-orbitron font-black text-3xl sm:text-4xl lg:text-5xl text-white mb-4">
+          <p className="text-[#FFC107] text-sm font-bold tracking-widest uppercase mb-3 ">Nuestros Pilares</p>
+          <h2 className="font-black text-3xl sm:text-4xl lg:text-5xl text-white mb-4">
             El futuro se construye
             <span className="bg-gradient-to-r from-[#FFC107] to-[#F57C00] bg-clip-text text-transparent"> sobre estos cimientos</span>
           </h2>
@@ -60,7 +60,7 @@ export function PillarsSection() {
                 >
                   {p.icon}
                 </div>
-                <h3 className="font-orbitron font-bold text-white text-lg mb-3">{p.title}</h3>
+                <h3 className="font-bold text-white text-lg mb-3">{p.title}</h3>
                 <p className="text-[#E8F0FE]/60 text-sm leading-relaxed">{p.desc}</p>
                 <div className="mt-4 h-0.5 w-12 mx-auto rounded-full transition-all duration-300 group-hover:w-full"
                   style={{ background: `linear-gradient(to right, ${p.color}, transparent)` }} />

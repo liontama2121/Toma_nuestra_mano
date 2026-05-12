@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Elianto';
+  src: url('/Elianto-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --fondo: #050D2E;
   --fondo2: #071A40;
@@ -20,16 +28,16 @@ body {
   background: var(--fondo);
   color: var(--texto);
   cursor: none;
+  font-family: 'Elianto', sans-serif;
+}
+
+*, *::before, *::after {
+  font-family: inherit;
 }
 
 @media (pointer: coarse) {
   body { cursor: auto; }
   #custom-cursor { display: none !important; }
-}
-
-/* Orbitron font class */
-.font-orbitron {
-  font-family: var(--font-orbitron), 'Orbitron', sans-serif;
 }
 
 /* Grid background */

@@ -11,6 +11,7 @@ const links = [
   { label: 'Misión', href: '#mision' },
   { label: 'Programas', href: '#programas' },
   { label: 'Impacto', href: '#impacto' },
+  { label: 'Videos', href: '#videos' },
 ];
 
 export function Navbar() {
@@ -42,7 +43,7 @@ export function Navbar() {
               className="rounded-full"
             />
             <div className="hidden sm:block">
-              <p className="text-white font-bold text-sm leading-tight font-orbitron">Toma Nuestra Mano</p>
+              <p className="text-white font-bold text-sm leading-tight">Toma Nuestra Mano</p>
               <p className="text-[#FFC107] text-xs">Hagámoslo Hoy</p>
             </div>
           </a>

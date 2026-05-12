@@ -18,7 +18,7 @@ function StatCounter({ stat }: { stat: ImpactStat }) {
       >
         <span
           ref={ref}
-          className="font-orbitron font-black text-2xl"
+          className="font-black text-2xl"
           style={{ color: stat.color }}
         >
           0

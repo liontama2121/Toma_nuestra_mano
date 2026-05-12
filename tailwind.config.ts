@@ -22,8 +22,7 @@ const config: Config = {
         texto: '#E8F0FE',
       },
       fontFamily: {
-        orbitron: ['var(--font-orbitron)', 'Orbitron', 'sans-serif'],
-        nunito: ['var(--font-nunito)', 'Nunito', 'sans-serif'],
+        elianto: ['var(--font-elianto)', 'sans-serif'],
       },
     },
   },

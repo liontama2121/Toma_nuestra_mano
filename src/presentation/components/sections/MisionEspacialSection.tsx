@@ -99,7 +99,7 @@ export function MisionEspacialSection() {
               <Badge color="#7B1FA2">Internacional</Badge>
             </div>
 
-            <h2 className="font-orbitron font-black text-3xl sm:text-4xl lg:text-5xl text-white mb-6 leading-tight">
+            <h2 className="font-black text-3xl sm:text-4xl lg:text-5xl text-white mb-6 leading-tight">
               Misión Espacial
               <span className="block bg-gradient-to-r from-[#FFC107] to-[#F57C00] bg-clip-text text-transparent">
                 Colombia 🚀
