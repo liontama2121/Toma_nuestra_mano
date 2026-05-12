@@ -15,7 +15,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section id="inicio" className="relative h-screen min-h-screen">
+    <section id="inicio" className="relative h-[40vh] min-h-[280px] sm:h-[55vh] md:h-screen">
       {/* Custom cursor */}
       <div
         id="custom-cursor"
@@ -30,7 +30,7 @@ export function HeroSection() {
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-contain md:object-cover object-center"
         >
           <source src="/backvideo.mp4" type="video/mp4" />
         </video>
