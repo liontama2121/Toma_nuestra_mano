@@ -59,6 +59,17 @@ body {
   #custom-cursor { display: none !important; }
 }
 
+/* Plataforma restaura cursor normal */
+.plataforma-shell,
+.plataforma-shell * {
+  cursor: auto;
+}
+.plataforma-shell button,
+.plataforma-shell a,
+.plataforma-shell [role="button"] {
+  cursor: pointer;
+}
+
 /* Grid background */
 .grid-bg {
   background-image:
