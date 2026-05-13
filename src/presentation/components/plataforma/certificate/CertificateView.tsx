@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Certificate } from '@/domain/entities/Certificate';
 import { Confetti } from './Confetti';
@@ -11,6 +11,26 @@ interface CertificateViewProps {
 
 export function CertificateView({ cert }: CertificateViewProps) {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [downloading, setDownloading] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    setDownloading(true);
+    try {
+      const [{ pdf }, { CertificatePDF }] = await Promise.all([
+        import('@react-pdf/renderer'),
+        import('./CertificatePDF'),
+      ]);
+      const blob = await pdf(<CertificatePDF cert={cert} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `certificado-${cert.signature}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   useEffect(() => {
     const card = cardRef.current;
@@ -86,10 +106,11 @@ export function CertificateView({ cert }: CertificateViewProps) {
 
       <div className="flex flex-col sm:flex-row gap-4 mt-8 z-10">
         <button
-          onClick={() => window.print()}
-          className="px-6 py-3 rounded-full font-bold text-sm transition-all duration-200 hover:opacity-90 cursor-pointer"
+          onClick={handleDownloadPDF}
+          disabled={downloading}
+          className="px-6 py-3 rounded-full font-bold text-sm transition-all duration-200 hover:opacity-90 cursor-pointer disabled:opacity-60"
           style={{ background: '#F59E0B', color: '#000' }}>
-          Descargar PDF
+          {downloading ? 'Generando PDF...' : 'Descargar PDF'}
         </button>
         <Link href="/plataforma"
           className="px-6 py-3 rounded-full font-bold text-sm border-2 transition-all duration-200 hover:bg-white/10 cursor-pointer"
