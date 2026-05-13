@@ -14,6 +14,25 @@
   --fondo: #050D2E;
   --fondo2: #071A40;
   --texto: #E8F0FE;
+
+  /* Plataforma estudiante */
+  --tnm-bg-deep: #050816;
+  --tnm-bg: #0A0E27;
+  --tnm-accent: #F59E0B;
+  --tnm-accent-soft: #FBBF24;
+  --tnm-pilar-mision: #8B5CF6;
+  --tnm-pilar-desarrollo: #06B6D4;
+  --tnm-pilar-arte: #EC4899;
+  --tnm-pilar-bienestar: #10B981;
+  --tnm-text-primary: #FFFFFF;
+  --tnm-text-muted: #D1D5DB;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 * {

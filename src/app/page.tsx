@@ -8,6 +8,7 @@ import { ProgramsSection } from '@/presentation/components/sections/ProgramsSect
 import { ImpactSection } from '@/presentation/components/sections/ImpactSection';
 import { VideoCarouselSection } from '@/presentation/components/sections/VideoCarouselSection';
 import { DonationSection } from '@/presentation/components/sections/DonationSection';
+import { PlataformaCTA } from '@/presentation/components/sections/PlataformaCTA';
 
 export default function Home() {
   return (
@@ -24,6 +25,7 @@ export default function Home() {
       </main>
       <Footer />
       <WhatsAppButton />
+      <PlataformaCTA />
     </>
   );
 }
