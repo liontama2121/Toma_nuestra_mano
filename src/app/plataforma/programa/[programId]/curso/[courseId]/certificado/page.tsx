@@ -4,22 +4,48 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import { CertificateView } from '@/presentation/components/plataforma/certificate/CertificateView';
 import { getClientUseCases } from '@/lib/diClient';
+import { getCourseDetailUseCase, getProgramsUseCase } from '@/lib/di';
 import { useStudent } from '@/presentation/hooks/useStudent';
 import { Certificate } from '@/domain/entities/Certificate';
 import Link from 'next/link';
 
 export default function CertificadoPage() {
-  const { courseId } = useParams<{ courseId: string }>();
+  const { programId, courseId } = useParams<{ programId: string; courseId: string }>();
   const student = useStudent();
   const [cert, setCert] = useState<Certificate | null>(null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    getClientUseCases().certRepo.getByCourseAndStudent(courseId, student.id).then((c) => {
-      if (c) setCert(c);
-      else setNotFound(true);
-    });
-  }, [courseId, student.id]);
+    const uc = getClientUseCases();
+
+    const load = async () => {
+      // Check existing cert first
+      const existing = await uc.certRepo.getByCourseAndStudent(courseId, student.id);
+      if (existing) { setCert(existing); return; }
+
+      // Auto-emit if course is 100% complete
+      const progress = await uc.getCourseProgress.execute(student.id, courseId);
+      if (progress.percentage < 100) { setNotFound(true); return; }
+
+      const [course, programs] = await Promise.all([
+        getCourseDetailUseCase.execute(courseId),
+        getProgramsUseCase.execute(),
+      ]);
+      const program = programs.find((p) => p.id === programId);
+      if (!course || !program) { setNotFound(true); return; }
+
+      const issued = await uc.issueCertificate.execute({
+        studentId: student.id,
+        studentName: student.displayName,
+        courseId,
+        courseTitle: course.title,
+        programName: program.title,
+      });
+      setCert(issued);
+    };
+
+    load();
+  }, [courseId, programId, student]);
 
   if (notFound) {
     return (

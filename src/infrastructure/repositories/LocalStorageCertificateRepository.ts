@@ -6,6 +6,8 @@ import { ICertificateRepository } from '@/domain/repositories/ICertificateReposi
 
 const CertSchema = z.object({
   id: z.string(),
+  studentId: z.string(),
+  courseId: z.string(),
   studentName: z.string(),
   courseTitle: z.string(),
   programName: z.string(),
@@ -19,7 +21,7 @@ const lookupKey = (courseId: string, studentId: string) => `tnm:cert-lookup:${st
 export class LocalStorageCertificateRepository implements ICertificateRepository {
   async issue(cert: Certificate): Promise<void> {
     localStorage.setItem(certKey(cert.id), JSON.stringify(cert));
-    localStorage.setItem(lookupKey(cert.id, cert.studentName), cert.id);
+    localStorage.setItem(lookupKey(cert.courseId, cert.studentId), cert.id);
   }
 
   async getById(certId: string): Promise<Certificate | null> {
@@ -34,20 +36,9 @@ export class LocalStorageCertificateRepository implements ICertificateRepository
 
   async getByCourseAndStudent(courseId: string, studentId: string): Promise<Certificate | null> {
     try {
-      // scan localStorage for matching cert
-      for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (!k?.startsWith('tnm:certificate:')) continue;
-        const raw = localStorage.getItem(k);
-        if (!raw) continue;
-        const cert = CertSchema.safeParse(JSON.parse(raw));
-        if (!cert.success) continue;
-        // We store courseId indirectly via courseTitle lookup — match by stored data
-        if (localStorage.getItem(lookupKey(courseId, studentId)) === cert.data.id) {
-          return cert.data;
-        }
-      }
-      return null;
+      const certId = localStorage.getItem(lookupKey(courseId, studentId));
+      if (!certId) return null;
+      return this.getById(certId);
     } catch {
       return null;
     }

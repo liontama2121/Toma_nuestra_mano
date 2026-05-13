@@ -17,6 +17,8 @@ export class IssueCertificateUseCase {
 
     const cert: Certificate = {
       id: uuidv4(),
+      studentId: params.studentId,
+      courseId: params.courseId,
       studentName: params.studentName,
       courseTitle: params.courseTitle,
       programName: params.programName,

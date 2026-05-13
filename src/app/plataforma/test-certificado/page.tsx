@@ -5,6 +5,8 @@ import { Certificate } from '@/domain/entities/Certificate';
 
 const TEST_CERT: Certificate = {
   id: 'test-cert-001',
+  studentId: 'demo-student',
+  courseId: 'curso-mision-espacial',
   studentName: 'Sofía Martínez',
   courseTitle: 'Misión Espacial Colombia',
   programName: 'Misión Espacial Colombia',
