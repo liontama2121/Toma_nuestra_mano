@@ -1,3 +1,5 @@
+import { AuthProvider } from '@/presentation/components/auth/AuthProvider';
+import { AuthGuard } from '@/presentation/components/auth/AuthGuard';
 import { PlataformaShell } from '@/presentation/components/plataforma/layout/PlataformaShell';
 
 export const metadata = {
@@ -5,5 +7,11 @@ export const metadata = {
 };
 
 export default function PlataformaLayout({ children }: { children: React.ReactNode }) {
-  return <PlataformaShell>{children}</PlataformaShell>;
+  return (
+    <AuthProvider>
+      <AuthGuard>
+        <PlataformaShell>{children}</PlataformaShell>
+      </AuthGuard>
+    </AuthProvider>
+  );
 }

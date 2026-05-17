@@ -3,9 +3,11 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'next/navigation';
 import { VideoPlayer } from '@/presentation/components/plataforma/course/VideoPlayer';
+import { QuizBlock } from '@/presentation/components/plataforma/course/QuizBlock';
 import { CourseProgressBar } from '@/presentation/components/plataforma/course/CourseProgressBar';
 import { SectionNavigation } from '@/presentation/components/plataforma/course/SectionNavigation';
 import { getCourseDetailUseCase } from '@/lib/di';
+import { quizzesBySectionId } from '@/infrastructure/data/quizData';
 import { Course } from '@/domain/entities/Course';
 import { Section } from '@/domain/entities/Section';
 import Link from 'next/link';
@@ -21,6 +23,7 @@ export default function SeccionPage() {
   const [course, setCourse] = useState<Course | null>(null);
   const [section, setSection] = useState<Section | null>(null);
   const [videoCompleted, setVideoCompleted] = useState(false);
+  const [quizPassed, setQuizPassed] = useState(false);
 
   useEffect(() => {
     getCourseDetailUseCase.execute(courseId).then((c) => {
@@ -34,9 +37,13 @@ export default function SeccionPage() {
     if (!section) return;
     const already = localStorage.getItem(`tnm:video-watched:${section.id}`) === 'true';
     if (already) setVideoCompleted(true);
+    const quizAlready = localStorage.getItem(`tnm:quiz-passed:${section.id}`) === 'true';
+    const hasQuiz = !!quizzesBySectionId[section.id];
+    if (quizAlready || !hasQuiz) setQuizPassed(true);
   }, [section]);
 
   const handleComplete = useCallback(() => setVideoCompleted(true), []);
+  const handleQuizPass = useCallback(() => setQuizPassed(true), []);
 
   if (!course || !section) {
     return (
@@ -85,6 +92,13 @@ export default function SeccionPage() {
               ⏳ Mira el video completo para continuar
             </p>
           )}
+
+          {videoCompleted && quizzesBySectionId[section.id] && (
+            <QuizBlock
+              quiz={quizzesBySectionId[section.id]}
+              onPass={handleQuizPass}
+            />
+          )}
         </div>
 
         <div className="mt-8">
@@ -94,7 +108,7 @@ export default function SeccionPage() {
             sectionId={section.id}
             order={order}
             totalSections={course.sections.length}
-            videoCompleted={videoCompleted}
+            videoCompleted={videoCompleted && quizPassed}
           />
         </div>
       </div>

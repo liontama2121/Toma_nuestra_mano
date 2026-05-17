@@ -25,7 +25,7 @@ const courses: Course[] = [
     description: 'Aprende los fundamentos de la programación y construye tu primer proyecto digital.',
     estimatedMinutes: 75,
     sections: [
-      { id: 'dd-s1', order: 1, title: 'El lenguaje de las máquinas', description: 'Qué es el código y cómo hablan las computadoras entre sí.', videoUrl: '/backvideo.mp4', durationSeconds: 900 },
+      { id: 'dd-s1', order: 1, title: 'El lenguaje de las máquinas', description: 'Qué es el código y cómo hablan las computadoras entre sí.', videoUrl: 'https://www.youtube.com/watch?v=o4D744FMie8', durationSeconds: 900 },
       { id: 'dd-s2', order: 2, title: 'Variables y condiciones', description: 'Los bloques básicos de todo programa: guardar datos y tomar decisiones.', videoUrl: '/backvideo.mp4', durationSeconds: 900 },
       { id: 'dd-s3', order: 3, title: 'Bucles y funciones', description: 'Cómo repetir acciones y organizar el código en partes reutilizables.', videoUrl: '/backvideo.mp4', durationSeconds: 900 },
       { id: 'dd-s4', order: 4, title: 'Tu primera página web', description: 'HTML y CSS básicos para crear una página que el mundo pueda ver.', videoUrl: '/backvideo.mp4', durationSeconds: 900 },

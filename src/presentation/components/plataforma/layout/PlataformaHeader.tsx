@@ -3,9 +3,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useStudent } from '@/presentation/hooks/useStudent';
+import { useAuth } from '@/presentation/hooks/useAuth';
 
 export function PlataformaHeader() {
   const student = useStudent();
+  const { logout, isAuthenticated } = useAuth();
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-white/10"
@@ -43,10 +45,30 @@ export function PlataformaHeader() {
             </svg>
           </button>
 
-          <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold cursor-pointer"
-            style={{ background: 'var(--tnm-pilar-mision)', border: '2px solid var(--tnm-accent)', color: '#fff' }}
-            title={student.displayName}>
-            {student.displayName.charAt(0)}
+          {/* Avatar con menú de sesión */}
+          <div className="relative group">
+            <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold cursor-pointer"
+              style={{ background: 'var(--tnm-pilar-mision)', border: '2px solid var(--tnm-accent)', color: '#fff' }}
+              title={student.displayName}>
+              {student.displayName.charAt(0)}
+            </div>
+
+            {/* Tooltip con nombre y opción de logout */}
+            <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-white/10 bg-[#0A0E27]/95 backdrop-blur-md shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-opacity duration-200 z-50">
+              <div className="px-4 py-3 border-b border-white/10">
+                <p className="text-xs font-bold text-white truncate">{student.displayName}</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--tnm-text-muted)' }}>Estudiante</p>
+              </div>
+              {isAuthenticated && (
+                <button
+                  onClick={logout}
+                  className="w-full text-left px-4 py-3 text-xs transition-colors hover:text-[#F59E0B] cursor-pointer"
+                  style={{ color: 'var(--tnm-text-muted)' }}
+                >
+                  Cerrar sesión
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
