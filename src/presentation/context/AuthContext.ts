@@ -22,7 +22,7 @@ export const AuthContext = createContext<AuthContextValue>({
   roles: [],
   isAuthenticated: false,
   error: null,
-  login: async (_email?: string, _password?: string) => {},
+  login: async () => {},
   logout: async () => {},
   hasRole: () => false,
 });

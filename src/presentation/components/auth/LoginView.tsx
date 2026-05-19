@@ -4,7 +4,6 @@ import { useState, FormEvent } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAuth } from '@/presentation/hooks/useAuth';
-import { isKeycloakConfigured } from '@/lib/keycloak';
 
 export function LoginView() {
   const { login, status, error } = useAuth();
