@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 import { CertificateView } from '@/presentation/components/plataforma/certificate/CertificateView';
 import { Certificate } from '@/domain/entities/Certificate';
 

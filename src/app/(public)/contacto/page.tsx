@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { ContactoClient } from '@/presentation/components/sections/ContactoClient';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: 'Contacto',
   description:

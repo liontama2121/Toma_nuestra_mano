@@ -1,6 +1,8 @@
 import { AuthProvider } from '@/presentation/components/auth/AuthProvider';
 import { LoginView } from '@/presentation/components/auth/LoginView';
 
+export const runtime = 'edge';
+
 export const metadata = {
   title: 'Iniciar sesión — Toma Nuestra Mano',
 };

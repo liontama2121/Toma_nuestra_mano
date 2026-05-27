@@ -1,5 +1,7 @@
 'use client';
 
+export const runtime = 'edge';
+
 // Esta página recibe el redirect de Keycloak después del login.
 // keycloak-js procesa automáticamente el `code` y `state` de la URL
 // cuando se llama a keycloak.init().

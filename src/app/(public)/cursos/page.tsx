@@ -4,6 +4,8 @@ import { programRepo, courseRepo } from '@/lib/di';
 import { Card } from '@/presentation/components/ui/Card';
 import { Badge } from '@/presentation/components/ui/Badge';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: 'Cursos',
   description:

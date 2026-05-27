@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { QuienesSomosClient } from '@/presentation/components/sections/QuienesSomosClient';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: 'Quiénes Somos',
   description:

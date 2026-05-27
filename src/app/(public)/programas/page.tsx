@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { ProgramsSection } from '@/presentation/components/sections/ProgramsSection';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: 'Programas',
   description:

@@ -11,6 +11,10 @@ out/
 .env*
 !.env.example
 
+# Cloudflare Pages / next-on-pages
+.vercel/
+.wrangler/
+
 # Leftovers
 /toma-nuestra-mano/
 /video/

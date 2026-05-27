@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { TransparenciaClient } from '@/presentation/components/sections/TransparenciaClient';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: 'Transparencia',
   description:

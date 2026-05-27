@@ -1,3 +1,5 @@
+export const runtime = 'edge';
+
 import { HeroSection } from '@/presentation/components/sections/HeroSection';
 import { PillarsSection } from '@/presentation/components/sections/PillarsSection';
 import { MisionEspacialSection } from '@/presentation/components/sections/MisionEspacialSection';

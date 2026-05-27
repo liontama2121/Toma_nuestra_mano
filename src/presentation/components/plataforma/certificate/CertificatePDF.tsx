@@ -1,5 +1,8 @@
 'use client';
 
+// ⚠️ @react-pdf/renderer NO es edge-compatible (usa Node fs/stream/Buffer).
+// Solo importar desde client components con dynamic import (ver CertificateView.tsx).
+// Importarlo server-side rompe el build de Cloudflare Pages (next-on-pages).
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 import { Certificate } from '@/domain/entities/Certificate';
 
