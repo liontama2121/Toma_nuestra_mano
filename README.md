@@ -1,53 +1,122 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fundación Toma Nuestra Mano — Sitio web + Plataforma educativa
 
-## Getting Started
+Proyecto **Next.js 14 (App Router)** para la **Fundación Toma Nuestra Mano Para Tu Desarrollo Social Integral** (ESAL, NIT 900.363.058-9, Bogotá D.C.).
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Incluye sitio público institucional + plataforma de cursos para estudiantes con certificación.
 
 ---
 
-## Autenticación con Keycloak
+## Stack
 
-La plataforma educativa usa **Keycloak** con flujo **Authorization Code + PKCE** para autenticar estudiantes.
+- **Next.js 14.2.35** (App Router, Server + Client Components)
+- **TypeScript 5** + **Tailwind CSS 3**
+- **Clean Architecture** (domain / application / infrastructure / presentation)
+- **anime.js v4** + **framer-motion** (animaciones)
+- **Keycloak (PKCE)** para auth real + modo demo con mock users
+- **@react-pdf/renderer** (certificados, solo client-side)
+- **Cloudflare Pages** (deploy) vía `@cloudflare/next-on-pages`
 
-### Variables de entorno requeridas
+---
 
-Copia `.env.example` a `.env.local` y completa los valores:
+## Desarrollo local
 
 ```bash
-cp .env.example .env.local
+npm install
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build    # build Next.js estándar
 ```
+
+### Rutas
+
+**Sitio público** (route group `(public)` con Navbar + Footer compartidos):
+
+| Ruta | Descripción |
+|---|---|
+| `/` | Home con secciones scrolleables |
+| `/quienes-somos` | Misión, visión, historia + video corporativo |
+| `/que-hacemos` | 7 áreas de trabajo oficiales |
+| `/programas` | Catálogo de programas |
+| `/cursos` | Catálogo de cursos por programa |
+| `/contacto` | Dirección, teléfonos, correo |
+| `/transparencia` | NIT, ESAL, inscripción CCB S0037201 |
+
+**Plataforma educativa** (layout custom, protegida por middleware):
+
+| Ruta | Descripción |
+|---|---|
+| `/auth/login`, `/auth/register`, `/auth/callback` | Flujo de autenticación |
+| `/plataforma` | Dashboard estudiante |
+| `/plataforma/programa/[programId]` | Detalle programa + cursos |
+| `/plataforma/programa/[programId]/curso/[courseId]/seccion/[order]` | Lección con video + quiz |
+| `/plataforma/programa/[programId]/curso/[courseId]/certificado` | Certificado PDF |
+
+---
+
+## Deploy en Cloudflare Pages
+
+El proyecto está configurado con **`@cloudflare/next-on-pages`** para deploy en Cloudflare Pages con edge runtime.
+
+### Build local (verificación)
+
+```bash
+npm run pages:build          # genera .vercel/output/static
+npm run pages:preview        # corre wrangler pages dev local
+```
+
+> **Nota Windows:** El build local requiere **Developer Mode activado** + **reboot** para que el token de usuario incluya `SeCreateSymbolicLinkPrivilege`. Sin esto, vercel CLI falla con `EPERM symlink`. Cloudflare Pages builder (Linux) no tiene este problema.
+
+### Configuración del formulario Cloudflare Pages
+
+| Campo | Valor |
+|---|---|
+| Production branch | `Juancode_v0` |
+| Framework preset | `Next.js` (o `None`) |
+| Build command | `npm run pages:build` |
+| Build output directory | `.vercel/output/static` |
+| Environment variable | `NODE_VERSION = 20` |
+| Compatibility flags (Production) | `nodejs_compat` |
+| Compatibility flags (Preview) | `nodejs_compat` |
+
+### Variables de entorno en CF Pages
+
+Solo necesarias si activas Keycloak real (ver sección Autenticación):
+
+- `NEXT_PUBLIC_KEYCLOAK_URL`
+- `NEXT_PUBLIC_KEYCLOAK_REALM`
+- `NEXT_PUBLIC_KEYCLOAK_CLIENT_ID`
+- `NEXT_PUBLIC_APP_URL`
+
+Sin estas variables, la plataforma corre en **modo demo** con usuarios mock (ver abajo).
+
+### Notas técnicas del adapter
+
+- Todas las páginas exportan `export const runtime = 'edge'` (forzado por next-on-pages).
+- `.npmrc` con `legacy-peer-deps=true` (peer mismatch Next 14.2 vs adapter ≥14.3).
+- `@react-pdf/renderer` se externaliza **solo en runtime nodejs**, no en edge (rompería el bundle). Ver `next.config.mjs`.
+- `@react-pdf/renderer` **NO es edge-compatible** — solo importarlo desde client components con `dynamic import` (ver `CertificateView.tsx`).
+
+---
+
+## Autenticación
+
+La plataforma tiene **dos modos**: Keycloak real (producción) y mock (demo/local).
+
+### Modo demo (sin Keycloak)
+
+Activo cuando `NEXT_PUBLIC_KEYCLOAK_URL` está vacío. Usuarios hardcoded en `src/lib/mockUsers.ts`:
+
+| Rol | Email | Contraseña |
+|---|---|---|
+| Estudiante | `sofia@tomanuestramano.org` | `Sofia2025*` |
+| Docente + Estudiante | `carlos@tomanuestramano.org` | `Carlos2025*` |
+| Admin + Docente + Estudiante | `laura@tomanuestramano.org` | `Laura2025*` |
+
+> ⚠️ **Estas credenciales son públicas en el repositorio.** Para producción real, configura Keycloak.
+
+### Modo Keycloak (producción)
+
+Flujo **Authorization Code + PKCE**. Variables requeridas (ver `.env.example`):
 
 | Variable | Descripción | Ejemplo |
 |---|---|---|
@@ -56,9 +125,7 @@ cp .env.example .env.local
 | `NEXT_PUBLIC_KEYCLOAK_CLIENT_ID` | Client ID de la app | `plataforma-estudiante` |
 | `NEXT_PUBLIC_APP_URL` | URL pública de la app | `https://tudominio.com` |
 
-> Si `NEXT_PUBLIC_KEYCLOAK_URL` está vacío, la plataforma usa autenticación simulada (modo desarrollo).
-
-### Configurar el servidor Keycloak
+#### Configurar el servidor Keycloak
 
 1. Accede a la consola de administración de Keycloak
 2. Crea un nuevo **Realm** (ej: `toma-nuestra-mano`)
@@ -86,9 +153,9 @@ cp .env.example .env.local
    https://tudominio.com
    ```
 
-### Roles disponibles
+### Roles
 
-El sistema reconoce estos roles del token JWT de Keycloak:
+El sistema reconoce roles del JWT (`realm_access.roles` + `resource_access.<clientId>.roles`):
 
 | Rol | Acceso |
 |---|---|
@@ -98,16 +165,41 @@ El sistema reconoce estos roles del token JWT de Keycloak:
 
 Para asignar roles: **Realm roles → Create role** y luego asígnalos a los usuarios.
 
-### Ejecutar tests de autenticación
+---
 
-Primero instala el runner de tests:
+## Arquitectura
+
+Clean Architecture, 4 capas:
+
+```
+src/
+  domain/          # entidades + interfaces de repositorio (TypeScript puro)
+  application/     # casos de uso — orquestan domain
+  infrastructure/  # StaticXRepository (datos hardcoded) + KeycloakAuthRepository
+  presentation/    # componentes React + hooks
+  lib/
+    di.ts          # inyección de dependencias manual (server)
+    diClient.ts    # inyección client-side
+    tokens.ts      # constantes de paleta
+    keycloak.ts    # singleton Keycloak
+    mockUsers.ts   # usuarios demo
+  middleware.ts    # protección de rutas /plataforma + /auth
+```
+
+Para agregar una sección/feature, ver `CLAUDE.md`.
+
+---
+
+## Tests (legacy)
+
+Hay un archivo `src/__tests__/auth/keycloakAuthRepository.test.ts.bak` deshabilitado (sin runner instalado). Para reactivar:
 
 ```bash
 npm install -D jest ts-jest @types/jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom
-```
-
-Luego ejecuta:
-
-```bash
+mv src/__tests__/auth/keycloakAuthRepository.test.ts.bak src/__tests__/auth/keycloakAuthRepository.test.ts
 npx jest src/__tests__/auth/
 ```
+
+---
+
+Hecho con ♥ por **JuanCode** · TPZ INFORMATICA LTDA
