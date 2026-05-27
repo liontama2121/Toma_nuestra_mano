@@ -2,15 +2,30 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Fundación Toma Nuestra Mano — Hagámoslo Hoy',
+  metadataBase: new URL('https://tomanuestramano.org'),
+  title: {
+    default: 'Fundación Toma Nuestra Mano — Hagámoslo Hoy',
+    template: '%s · Fundación Toma Nuestra Mano',
+  },
   description:
-    'Fundación colombiana sin ánimo de lucro que transforma vidas a través de tecnología, innovación, educación y bienestar comunitario. Bogotá, Colombia desde 2010.',
-  keywords: ['fundación', 'Colombia', 'tecnología', 'educación', 'niños', 'innovación', 'Bogotá'],
+    'Fundación Toma Nuestra Mano Para Tu Desarrollo Social Integral. Entidad sin ánimo de lucro colombiana (NIT 900.363.058-9) que promueve el desarrollo social integral en comunidades vulnerables desde 2010.',
+  keywords: [
+    'fundación',
+    'Colombia',
+    'Bogotá',
+    'ESAL',
+    'desarrollo social',
+    'educación',
+    'comunidad',
+    'NIT 900363058',
+    'Toma Nuestra Mano',
+  ],
   icons: { icon: '/logo.png' },
   openGraph: {
     title: 'Fundación Toma Nuestra Mano',
-    description: 'Hagámoslo Hoy — Tecnología e innovación para transformar vidas en Colombia',
+    description: 'Hagámoslo Hoy — Desarrollo social integral para comunidades vulnerables en Colombia',
     type: 'website',
+    locale: 'es_CO',
   },
 };
 

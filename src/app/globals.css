@@ -46,28 +46,11 @@ html {
 body {
   background: var(--fondo);
   color: var(--texto);
-  cursor: none;
   font-family: 'Elianto', sans-serif;
 }
 
 *, *::before, *::after {
   font-family: inherit;
-}
-
-@media (pointer: coarse) {
-  body { cursor: auto; }
-  #custom-cursor { display: none !important; }
-}
-
-/* Plataforma restaura cursor normal */
-.plataforma-shell,
-.plataforma-shell * {
-  cursor: auto;
-}
-.plataforma-shell button,
-.plataforma-shell a,
-.plataforma-shell [role="button"] {
-  cursor: pointer;
 }
 
 /* Grid background */

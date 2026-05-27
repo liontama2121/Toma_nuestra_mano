@@ -1,28 +1,6 @@
-'use client';
-
-import { useEffect } from 'react';
-
 export function HeroSection() {
-  useEffect(() => {
-    const handleMouse = (e: MouseEvent) => {
-      const cursor = document.getElementById('custom-cursor');
-      if (cursor) {
-        cursor.style.transform = `translate(${e.clientX - 10}px, ${e.clientY - 10}px)`;
-      }
-    };
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
-  }, []);
-
   return (
     <section id="inicio" className="relative h-[40vh] min-h-[280px] sm:h-[55vh] md:h-screen">
-      {/* Custom cursor */}
-      <div
-        id="custom-cursor"
-        className="fixed top-0 left-0 w-5 h-5 rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{ background: '#FFC107', transition: 'transform 0.05s linear' }}
-      />
-
       {/* Video + overlay */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <video
